@@ -1,7 +1,9 @@
 <h1>Listing sandwiches</h1>
 
-<table class="table-condensed table-hover">
+<table>
   <tr>
+    <th>Id</th>
+    <th>Order Id</th>
     <th></th>
     <th></th>
     <th></th>
@@ -9,6 +11,8 @@
 
 <% @sandwiches.each do |sandwich| %>
   <tr>
+    <td><%= sandwich.id %></td>
+    <td><%= sandwich.order_id %></td>
     <td><%= link_to '', sandwich, class: "icon-search" %></td>
     <td><%= link_to '', edit_sandwich_path(sandwich), class: "icon-pencil" %></td>
     <td><%= link_to '', sandwich, class: "icon-trash", method: :delete, data: { confirm: 'Are you sure?' } %></td>

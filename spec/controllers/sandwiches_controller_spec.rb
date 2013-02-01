@@ -20,11 +20,26 @@ require 'spec_helper'
 
 describe SandwichesController do
 
+  before(:all) do
+    @sourdough = Container.create(name: 'sourdough')
+    @wheat = Container.create(name: 'whole wheat')
+    @turkey = Meat.create(name: 'turkey')
+  end
+
+  let(:sourdough) { Container.first  }
+  let(:wheat)     { Container.last   }
+  let(:turkey)    { Ingredient.first }
+
+
   # This should return the minimal set of attributes required to create a valid
   # Sandwich. As you add validations to Sandwich, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {  }
+    { containers: [wheat] }
+  end
+
+  def valid_params
+    {sandwich: { containers: [wheat.attributes] }}
   end
 
   # This should return the minimal set of values that should be in the session
@@ -69,18 +84,18 @@ describe SandwichesController do
     describe "with valid params" do
       it "creates a new Sandwich" do
         expect {
-          post :create, {:sandwich => valid_attributes}, valid_session
+          post :create, {:sandwich => valid_params}, valid_session
         }.to change(Sandwich, :count).by(1)
       end
 
       it "assigns a newly created sandwich as @sandwich" do
-        post :create, {:sandwich => valid_attributes}, valid_session
+        post :create, {:sandwich => valid_params}, valid_session
         assigns(:sandwich).should be_a(Sandwich)
         assigns(:sandwich).should be_persisted
       end
 
       it "redirects to the created sandwich" do
-        post :create, {:sandwich => valid_attributes}, valid_session
+        post :create, {:sandwich => valid_params}, valid_session
         response.should redirect_to(Sandwich.last)
       end
     end
@@ -116,13 +131,13 @@ describe SandwichesController do
 
       it "assigns the requested sandwich as @sandwich" do
         sandwich = Sandwich.create! valid_attributes
-        put :update, {:id => sandwich.to_param, :sandwich => valid_attributes}, valid_session
+        put :update, {:id => sandwich.to_param, :sandwich => valid_params[:sandwich]}, valid_session
         assigns(:sandwich).should eq(sandwich)
       end
 
       it "redirects to the sandwich" do
         sandwich = Sandwich.create! valid_attributes
-        put :update, {:id => sandwich.to_param, :sandwich => valid_attributes}, valid_session
+        put :update, {:id => sandwich.to_param, :sandwich => valid_params[:sandwich]}, valid_session
         response.should redirect_to(sandwich)
       end
     end

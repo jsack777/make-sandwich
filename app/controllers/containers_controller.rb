@@ -2,7 +2,7 @@ class ContainersController < ApplicationController
   # GET /containers
   # GET /containers.json
   def index
-    @containers = Container.all
+    @containers = Container.order(:name)
 
     respond_to do |format|
       format.html # index.html.erb

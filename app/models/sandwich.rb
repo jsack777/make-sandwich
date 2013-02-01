@@ -1,5 +1,6 @@
 class Sandwich < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :containers, :ingredients
+
   has_many :sandwich_containers
   has_many :containers, :through => :sandwich_containers
   has_many :sandwich_ingredients
@@ -10,7 +11,7 @@ class Sandwich < ActiveRecord::Base
 
   def length_of_containers
     if self.containers.length != 1
-      errors.add(:containers, "must be 1 and only 1 for a  sandwich")
+      errors.add(:containers, "must be 1 and only 1 container for a sandwich")
     end
   end
 
@@ -29,4 +30,33 @@ class Sandwich < ActiveRecord::Base
     containers.pop
     containers << value
   end
+
+  # 3 types of sandwiches as starting points
+  def self.meaty
+    sandwich = new
+    sandwich.container = Container.first
+    sandwich.ingredients = [
+        Meat.meaty, Cheese.first
+    ].flatten
+    sandwich
+  end
+
+  def self.veggie
+    sandwich = new
+    sandwich.container = Container.last
+    sandwich.ingredients = [
+        Meat.veggie, Cheese.last, Vegetable.all
+    ].flatten
+    sandwich
+  end
+
+  def self.vegan
+    sandwich = new
+    sandwich.container = Container.last
+    sandwich.ingredients = [
+        Vegetable.all
+    ].flatten
+    sandwich
+  end
+
 end

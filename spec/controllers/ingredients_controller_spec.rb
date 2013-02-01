@@ -36,7 +36,7 @@ describe IngredientsController do
 
   describe "GET index" do
     it "assigns all ingredients as @ingredients" do
-      ingredient = Ingredient.create! valid_attributes
+      ingredient = Cheese.create! valid_attributes
       get :index, {}, valid_session
       assigns(:ingredients).should eq([ingredient])
     end
@@ -44,7 +44,7 @@ describe IngredientsController do
 
   describe "GET show" do
     it "assigns the requested ingredient as @ingredient" do
-      ingredient = Ingredient.create! valid_attributes
+      ingredient = Cheese.create! valid_attributes
       get :show, {:id => ingredient.to_param}, valid_session
       assigns(:ingredient).should eq(ingredient)
     end
@@ -59,7 +59,7 @@ describe IngredientsController do
 
   describe "GET edit" do
     it "assigns the requested ingredient as @ingredient" do
-      ingredient = Ingredient.create! valid_attributes
+      ingredient = Cheese.create! valid_attributes
       get :edit, {:id => ingredient.to_param}, valid_session
       assigns(:ingredient).should eq(ingredient)
     end
@@ -105,23 +105,23 @@ describe IngredientsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested ingredient" do
-        ingredient = Ingredient.create! valid_attributes
+        ingredient = Cheese.create! valid_attributes
         # Assuming there are no other ingredients in the database, this
         # specifies that the Ingredient created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Ingredient.any_instance.should_receive(:update_attributes).with({ "name" => "MyString" })
-        put :update, {:id => ingredient.to_param, :ingredient => { "name" => "MyString" }}, valid_session
+        put :update, {:id => ingredient.to_param, :ingredient => { "name" => "MyString", 'type' => 'Cheese' }}, valid_session
       end
 
       it "assigns the requested ingredient as @ingredient" do
-        ingredient = Ingredient.create! valid_attributes
+        ingredient = Cheese.create! valid_attributes
         put :update, {:id => ingredient.to_param, :ingredient => valid_attributes}, valid_session
         assigns(:ingredient).should eq(ingredient)
       end
 
       it "redirects to the ingredient" do
-        ingredient = Ingredient.create! valid_attributes
+        ingredient = Cheese.create! valid_attributes
         put :update, {:id => ingredient.to_param, :ingredient => valid_attributes}, valid_session
         response.should redirect_to(ingredient)
       end
@@ -129,7 +129,7 @@ describe IngredientsController do
 
     describe "with invalid params" do
       it "assigns the ingredient as @ingredient" do
-        ingredient = Ingredient.create! valid_attributes
+        ingredient = Cheese.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Ingredient.any_instance.stub(:save).and_return(false)
         put :update, {:id => ingredient.to_param, :ingredient => { "name" => "invalid value" }}, valid_session
@@ -137,7 +137,7 @@ describe IngredientsController do
       end
 
       it "re-renders the 'edit' template" do
-        ingredient = Ingredient.create! valid_attributes
+        ingredient = Cheese.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Ingredient.any_instance.stub(:save).and_return(false)
         put :update, {:id => ingredient.to_param, :ingredient => { "name" => "invalid value" }}, valid_session
@@ -148,14 +148,14 @@ describe IngredientsController do
 
   describe "DELETE destroy" do
     it "destroys the requested ingredient" do
-      ingredient = Ingredient.create! valid_attributes
+      ingredient = Cheese.create! valid_attributes
       expect {
         delete :destroy, {:id => ingredient.to_param}, valid_session
       }.to change(Ingredient, :count).by(-1)
     end
 
     it "redirects to the ingredients list" do
-      ingredient = Ingredient.create! valid_attributes
+      ingredient = Cheese.create! valid_attributes
       delete :destroy, {:id => ingredient.to_param}, valid_session
       response.should redirect_to(ingredients_url)
     end

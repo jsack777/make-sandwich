@@ -18,11 +18,18 @@ Sandwich
 Container
   wraps a sandwich - this could be bread, pita, a bowl
 
-Ingredient
-  bologna, salami, chicken, spinach, tomato, chedder cheese, feta
+Ingredients
+  Cheeses
+    chedder, feta, ...
 
-Condiment
-  catsup, ketchup, mayo, vinigrette
+  Condiments
+    catsup, ketchup, mayo, vinigrette, ...
+
+  Meats
+    bologna, salami, chicken, ...
+
+  Vegetables
+    spinach, tomato, ...
 
 Order
   has sandwich(es) and belongs to a user
@@ -30,3 +37,4 @@ Order
 User
   Admin?, password, email, orders
 
+TODO:

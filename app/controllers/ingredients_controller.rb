@@ -2,7 +2,7 @@ class IngredientsController < ApplicationController
   # GET /ingredients
   # GET /ingredients.json
   def index
-    @ingredients = Ingredient.all
+    @ingredients = Ingredient.order([:type, :name])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -40,7 +40,9 @@ class IngredientsController < ApplicationController
   # POST /ingredients
   # POST /ingredients.json
   def create
-    @ingredient = Ingredient.new(params[:ingredient])
+    klass = params[:ingredient][:type]
+    params[:ingredient].delete :type
+    @ingredient = klass.constantize.new(params[:ingredient])
 
     respond_to do |format|
       if @ingredient.save
@@ -56,7 +58,9 @@ class IngredientsController < ApplicationController
   # PUT /ingredients/1
   # PUT /ingredients/1.json
   def update
-    @ingredient = Ingredient.find(params[:id])
+    klass = params[:ingredient][:type]
+    params[:ingredient].delete :type
+    @ingredient = klass.constantize.find(params[:id])
 
     respond_to do |format|
       if @ingredient.update_attributes(params[:ingredient])

@@ -1,6 +1,9 @@
 class Ingredient < ActiveRecord::Base
-  attr_accessible :name
-  has_and_belongs_to_many :sandwiches
+  TYPES = %w(Cheese Condiment Meat Vegetable)
 
-  validates :name, :presence => true
+  attr_accessible :name
+  has_many :sandwich_ingredients
+  has_many :sandwiches, :through => :sandwich_ingredients
+
+  validates :name, :presence => true, :uniqueness => true
 end
