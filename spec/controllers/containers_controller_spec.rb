@@ -20,6 +20,12 @@ require 'spec_helper'
 
 describe ContainersController do
 
+  before(:each) {
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @user = User.first || create(:user)
+    sign_in @user
+  }
+
   # This should return the minimal set of attributes required to create a valid
   # Container. As you add validations to Container, be sure to
   # update the return value of this method accordingly.
@@ -37,7 +43,7 @@ describe ContainersController do
   describe "GET index" do
     it "assigns all containers as @containers" do
       container = Container.create! valid_attributes
-      get :index, {}, valid_session
+      p get :index, {}, valid_session
       assigns(:containers).should eq([container])
     end
   end

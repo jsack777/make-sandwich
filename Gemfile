@@ -24,6 +24,7 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+  gem 'factory_girl_rails'
   gem 'rspec-rails', '>=2.6.0'
   gem 'simplecov', '>=0.3.8', :require => false
   gem 'jasminerice'
