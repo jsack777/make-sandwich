@@ -1,7 +1,7 @@
 class Container < ActiveRecord::Base
   attr_accessible :name
-  belongs_to :sandwich
+  has_many :sandwich_containers
+  has_many :sandwiches, :through => :sandwich_containers
 
   validates :name, :presence => true
-
 end

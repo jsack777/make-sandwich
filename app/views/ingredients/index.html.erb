@@ -1,6 +1,6 @@
 <h1>Listing ingredients</h1>
 
-<table>
+<table class="table-condensed table-hover">
   <tr>
     <th>Name</th>
     <th></th>
@@ -11,9 +11,9 @@
 <% @ingredients.each do |ingredient| %>
   <tr>
     <td><%= ingredient.name %></td>
-    <td><%= link_to 'Show', ingredient %></td>
-    <td><%= link_to 'Edit', edit_ingredient_path(ingredient) %></td>
-    <td><%= link_to 'Destroy', ingredient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to '', ingredient, class: "icon-search" %></td>
+    <td><%= link_to '', edit_ingredient_path(ingredient), class: "icon-pencil" %></td>
+    <td><%= link_to '', ingredient, class: "icon-trash", method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

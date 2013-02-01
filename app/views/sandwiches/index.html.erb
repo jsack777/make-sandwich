@@ -1,6 +1,6 @@
 <h1>Listing sandwiches</h1>
 
-<table>
+<table class="table-condensed table-hover">
   <tr>
     <th></th>
     <th></th>
@@ -9,9 +9,9 @@
 
 <% @sandwiches.each do |sandwich| %>
   <tr>
-    <td><%= link_to 'Show', sandwich %></td>
-    <td><%= link_to 'Edit', edit_sandwich_path(sandwich) %></td>
-    <td><%= link_to 'Destroy', sandwich, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to '', sandwich, class: "icon-search" %></td>
+    <td><%= link_to '', edit_sandwich_path(sandwich), class: "icon-pencil" %></td>
+    <td><%= link_to '', sandwich, class: "icon-trash", method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

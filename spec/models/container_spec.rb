@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Container do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  it "requires a name" do
+    subject.valid?.should be(false)
+  end
+
 end

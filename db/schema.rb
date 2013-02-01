@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130201003807) do
+ActiveRecord::Schema.define(:version => 20130201020624) do
 
   create_table "containers", :force => true do |t|
     t.string   "name"
@@ -38,6 +38,22 @@ ActiveRecord::Schema.define(:version => 20130201003807) do
   end
 
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
+
+  create_table "sandwich_containers", :id => false, :force => true do |t|
+    t.integer "container_id"
+    t.integer "sandwich_id"
+  end
+
+  add_index "sandwich_containers", ["container_id", "sandwich_id"], :name => "index_sandwich_containers_on_container_id_and_sandwich_id"
+  add_index "sandwich_containers", ["sandwich_id", "container_id"], :name => "index_sandwich_containers_on_sandwich_id_and_container_id"
+
+  create_table "sandwich_ingredients", :id => false, :force => true do |t|
+    t.integer "ingredient_id"
+    t.integer "sandwich_id"
+  end
+
+  add_index "sandwich_ingredients", ["ingredient_id", "sandwich_id"], :name => "index_sandwich_ingredients_on_ingredient_id_and_sandwich_id"
+  add_index "sandwich_ingredients", ["sandwich_id", "ingredient_id"], :name => "index_sandwich_ingredients_on_sandwich_id_and_ingredient_id"
 
   create_table "sandwiches", :force => true do |t|
     t.integer  "order_id"

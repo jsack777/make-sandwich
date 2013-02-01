@@ -1,6 +1,6 @@
 <h1>Listing containers</h1>
 
-<table>
+<table class="table-condensed table-hover">
   <tr>
     <th>Name</th>
     <th></th>
@@ -11,9 +11,9 @@
 <% @containers.each do |container| %>
   <tr>
     <td><%= container.name %></td>
-    <td><%= link_to 'Show', container %></td>
-    <td><%= link_to 'Edit', edit_container_path(container) %></td>
-    <td><%= link_to 'Destroy', container, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to '', container, class: "icon-search" %></td>
+    <td><%= link_to '', edit_container_path(container), class: "icon-pencil" %></td>
+    <td><%= link_to '', container, class: "icon-trash", method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

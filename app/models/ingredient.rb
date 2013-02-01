@@ -1,7 +1,6 @@
 class Ingredient < ActiveRecord::Base
   attr_accessible :name
-  belongs_to :sandwich
+  has_and_belongs_to_many :sandwiches
 
   validates :name, :presence => true
-
 end
