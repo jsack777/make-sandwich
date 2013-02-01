@@ -1,4 +1,22 @@
 MakeSandwich::Application.routes.draw do
+  resources :users
+
+
+  resources :orders
+
+
+  resources :condiments
+
+
+  resources :ingredients
+
+
+  resources :containers
+
+
+  resources :sandwiches
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
