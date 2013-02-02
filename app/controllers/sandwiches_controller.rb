@@ -40,7 +40,7 @@ class SandwichesController < ApplicationController
   # POST /sandwiches
   # POST /sandwiches.json
   def create
-    @sandwich = Sandwich.new(params[:sandwich])
+    @sandwich = Sandwich.build_one(params[:sandwich])
 
     respond_to do |format|
       if @sandwich.save
@@ -57,9 +57,16 @@ class SandwichesController < ApplicationController
   # PUT /sandwiches/1.json
   def update
     @sandwich = Sandwich.find(params[:id])
+    if params[:sandwich]
+      @container = params[:sandwich][:containers].first if params[:sandwich][:containers]
+      @ingredients = params[:sandwich][:ingredients]
+    end
+
+    @sandwich.container = Container.find @container if @container
+    @sandwich.ingredients = Ingredient.find @ingredients if @ingredients
 
     respond_to do |format|
-      if @sandwich.update_attributes(params[:sandwich])
+      if @sandwich.save
         format.html { redirect_to @sandwich, notice: 'Sandwich was successfully updated.' }
         format.json { head :no_content }
       else

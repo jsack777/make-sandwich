@@ -39,7 +39,7 @@ describe SandwichesController do
   end
 
   def valid_params
-    {sandwich: { containers: [wheat.attributes] }}
+    { containers: [wheat.id] }
   end
 
   # This should return the minimal set of values that should be in the session
@@ -125,19 +125,19 @@ describe SandwichesController do
         # specifies that the Sandwich created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Sandwich.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
+        Sandwich.any_instance.should_receive(:save)
         put :update, {:id => sandwich.to_param, :sandwich => { "these" => "params" }}, valid_session
       end
 
       it "assigns the requested sandwich as @sandwich" do
         sandwich = Sandwich.create! valid_attributes
-        put :update, {:id => sandwich.to_param, :sandwich => valid_params[:sandwich]}, valid_session
+        put :update, {:id => sandwich.to_param, :sandwich => valid_params}, valid_session
         assigns(:sandwich).should eq(sandwich)
       end
 
       it "redirects to the sandwich" do
         sandwich = Sandwich.create! valid_attributes
-        put :update, {:id => sandwich.to_param, :sandwich => valid_params[:sandwich]}, valid_session
+        put :update, {:id => sandwich.to_param, :sandwich => valid_params}, valid_session
         response.should redirect_to(sandwich)
       end
     end

@@ -24,7 +24,7 @@ describe IngredientsController do
   # Ingredient. As you add validations to Ingredient, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { "name" => "MyString" }
+    { "name" => "MyString", 'type' => 'Cheese' }
   end
 
   # This should return the minimal set of values that should be in the session
@@ -89,14 +89,14 @@ describe IngredientsController do
       it "assigns a newly created but unsaved ingredient as @ingredient" do
         # Trigger the behavior that occurs when invalid params are submitted
         Ingredient.any_instance.stub(:save).and_return(false)
-        post :create, {:ingredient => { "name" => "invalid value" }}, valid_session
+        post :create, {:ingredient => { "name" => "invalid value", 'type' => 'Cheese' }}, valid_session
         assigns(:ingredient).should be_a_new(Ingredient)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Ingredient.any_instance.stub(:save).and_return(false)
-        post :create, {:ingredient => { "name" => "invalid value" }}, valid_session
+        post :create, {:ingredient => { "name" => "invalid value", 'type' => 'Cheese' }}, valid_session
         response.should render_template("new")
       end
     end
@@ -132,7 +132,7 @@ describe IngredientsController do
         ingredient = Cheese.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Ingredient.any_instance.stub(:save).and_return(false)
-        put :update, {:id => ingredient.to_param, :ingredient => { "name" => "invalid value" }}, valid_session
+        put :update, {:id => ingredient.to_param, :ingredient => { "name" => "invalid value", 'type' => 'Cheese' }}, valid_session
         assigns(:ingredient).should eq(ingredient)
       end
 
@@ -140,7 +140,7 @@ describe IngredientsController do
         ingredient = Cheese.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Ingredient.any_instance.stub(:save).and_return(false)
-        put :update, {:id => ingredient.to_param, :ingredient => { "name" => "invalid value" }}, valid_session
+        put :update, {:id => ingredient.to_param, :ingredient => { "name" => "invalid value", 'type' => 'Cheese' }}, valid_session
         response.should render_template("edit")
       end
     end

@@ -31,6 +31,14 @@ class Sandwich < ActiveRecord::Base
     containers << value
   end
 
+  def self.build_one(options = {})
+    sandwich = new
+    bread = options[:containers].first if options[:containers]
+    sandwich.container = Container.find(bread) if bread.present?
+    sandwich.ingredients = Ingredient.find(options[:ingredients]) if options[:ingredients].present?
+    sandwich
+  end
+
   # 3 types of sandwiches as starting points
   def self.meaty
     sandwich = new

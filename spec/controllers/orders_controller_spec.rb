@@ -20,11 +20,17 @@ require 'spec_helper'
 
 describe OrdersController do
 
+  before(:all) {
+    @user = User.first || create(:user)
+  }
+
+  let(:user_id) { @user.id }
+
   # This should return the minimal set of attributes required to create a valid
   # Order. As you add validations to Order, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {  }
+    { :user_id => user_id  }
   end
 
   # This should return the minimal set of values that should be in the session

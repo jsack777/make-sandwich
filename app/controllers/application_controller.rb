@@ -8,5 +8,5 @@ class ApplicationController < ActionController::Base
     true
   end
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_user! unless Rails.env.match(/test/)
 end

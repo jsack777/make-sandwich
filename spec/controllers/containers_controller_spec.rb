@@ -43,7 +43,7 @@ describe ContainersController do
   describe "GET index" do
     it "assigns all containers as @containers" do
       container = Container.create! valid_attributes
-      p get :index, {}, valid_session
+      get :index, {}, valid_session
       assigns(:containers).should eq([container])
     end
   end

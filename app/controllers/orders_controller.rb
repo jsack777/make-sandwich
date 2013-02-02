@@ -2,7 +2,8 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.where(user_id: current_user.id)
+    @orders = Order.where(user_id: current_user.id) if current_user.present?
+    @orders ||= Order.all
 
     respond_to do |format|
       format.html # index.html.erb
