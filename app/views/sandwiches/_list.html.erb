@@ -1,0 +1,24 @@
+<h1>Listing sandwiches for Order <%= @order.id if @order %></h1>
+
+<table class="table-hover">
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sandwiches.each_with_index do |sandwich, idx| %>
+  <tr>
+    <td><%= idx + 1 %>. <%= sandwich.ingredients.present? ?
+                                    sandwich.ingredients.collect{|ingredient| ingredient.name}.join(", ") :
+                            "nothing" %> on
+      <%= sandwich.container.name if sandwich.container %>
+    </td>
+    <td><%= link_to '', edit_sandwich_path(sandwich), class: "icon-pencil" %></td>
+    <td><%= link_to '', sandwich, class: "icon-trash", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
