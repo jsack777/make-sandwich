@@ -10,7 +10,7 @@ class OrderMailer < ActionMailer::Base
 #{sandwich.ingredients.present? ? sandwich.ingredients.collect{|ingredient| ingredient.name}.join(", ") : "nothing"}"
       order_text += "\n on #{sandwich.container.name}\n\n" if sandwich.container
     end
-    order_text += "A Snappy quote from our friends at http://www.iheartquotes.com/"
+    order_text += "A Snappy quote from our friends at http://www.iheartquotes.com/\n\n"
     order_text += SnappyQuote.get_one
     mail(:to => order.user.email, :subject => "Order Confirmation") do |format|
       format.html { render :partial => 'sandwiches/list' }
