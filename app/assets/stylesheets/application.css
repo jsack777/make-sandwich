@@ -16,3 +16,8 @@
   float: right;
   margin-right: 24px;
 }
+
+.header {
+    background-color: #f7f7f9;
+    height: 32px;
+}

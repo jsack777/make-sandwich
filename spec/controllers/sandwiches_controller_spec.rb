@@ -21,11 +21,15 @@ require 'spec_helper'
 describe SandwichesController do
 
   before(:all) do
+    @user = User.first
+    @order = Order.first || Order.create(user_id: @user.id)
+    p @order
     @sourdough = Container.create(name: 'sourdough')
     @wheat = Container.create(name: 'whole wheat')
     @turkey = Meat.create(name: 'turkey')
   end
 
+  let(:order)     { Order.first      }
   let(:sourdough) { Container.first  }
   let(:wheat)     { Container.last   }
   let(:turkey)    { Ingredient.first }
@@ -35,7 +39,7 @@ describe SandwichesController do
   # Sandwich. As you add validations to Sandwich, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { containers: [wheat] }
+    { order_id: order.id, containers: [wheat] }
   end
 
   def valid_params
@@ -46,7 +50,7 @@ describe SandwichesController do
   # in order to pass any filters (e.g. authentication) defined in
   # SandwichesController. Be sure to keep this updated too.
   def valid_session
-    {}
+    {order_id: order.id}
   end
 
   describe "GET index" do
@@ -115,7 +119,7 @@ describe SandwichesController do
         response.should render_template("new")
       end
     end
-  end
+  end if false
 
   describe "PUT update" do
     describe "with valid params" do

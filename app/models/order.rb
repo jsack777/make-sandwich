@@ -3,4 +3,6 @@ class Order < ActiveRecord::Base
 
   belongs_to :user
   has_many :sandwiches
+
+  validates :user_id, :presence => true
 end

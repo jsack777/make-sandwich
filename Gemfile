@@ -23,12 +23,16 @@ end
 
 gem 'jquery-rails'
 
-group :development, :test do
-  gem 'factory_girl_rails'
-  gem 'rspec-rails', '>=2.6.0'
-  gem 'simplecov', '>=0.3.8', :require => false
-  gem 'jasminerice'
-  gem 'cucumber-rails', :require => false
+group :development do
+  gem 'meta_request', '~>0.2.1'
+  group :test do
+    gem 'factory_girl_rails'
+    gem 'rspec-rails', '>=2.6.0'
+    gem 'simplecov', '>=0.3.8', :require => false
+    gem 'jasminerice'
+    gem 'database_cleaner'
+    gem 'cucumber-rails', :require => false
+  end
 end
 
 # To use ActiveModel has_secure_password

@@ -1,8 +1,17 @@
 class SandwichesController < ApplicationController
+
+  before_filter :get_order
+
+  def get_order
+    @order = Order.find(session[:order_id]) if session[:order_id]
+    logger.debug "current order session: #{@order.id}" if @order
+  end
+
   # GET /sandwiches
   # GET /sandwiches.json
   def index
-    @sandwiches = Sandwich.all
+    @sandwiches = Sandwich.where(order_id: @order.id) if @order
+    @sandwiches ||= Sandwich.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -21,10 +30,28 @@ class SandwichesController < ApplicationController
     end
   end
 
+  def edit_session
+    params.merge!(order_id: @order.id)
+    @sandwich_examples = Sandwich.examples
+    @containers = Container.order(:name)
+    @meats = Meat.order(:name)
+    @veggies = Vegetable.order(:name)
+    @cheeses = Cheese.order(:name)
+    @condiments = Condiment.order(:name)
+    @ingredients = [@meats, @veggies, @cheeses, @condiments].flatten
+  end
+
+  def select_theme
+    @sandwich = Sandwich.themed(params)
+    logger.debug "current sandwich: #{@sandwich.ingredients.inspect} on #{@sandwich.container.name}"
+    edit_session
+  end
+
   # GET /sandwiches/new
   # GET /sandwiches/new.json
   def new
     @sandwich = Sandwich.new
+    edit_session
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,18 +62,21 @@ class SandwichesController < ApplicationController
   # GET /sandwiches/1/edit
   def edit
     @sandwich = Sandwich.find(params[:id])
+    edit_session
   end
 
   # POST /sandwiches
   # POST /sandwiches.json
   def create
-    @sandwich = Sandwich.build_one(params[:sandwich])
+    params.merge!(order_id: @order.id)
+    @sandwich = Sandwich.build_one(params)
 
     respond_to do |format|
       if @sandwich.save
-        format.html { redirect_to @sandwich, notice: 'Sandwich was successfully created.' }
+        format.html { redirect_to :action => :index, notice: 'Sandwich was successfully created.' }
         format.json { render json: @sandwich, status: :created, location: @sandwich }
       else
+        edit_session
         format.html { render action: "new" }
         format.json { render json: @sandwich.errors, status: :unprocessable_entity }
       end
@@ -56,14 +86,7 @@ class SandwichesController < ApplicationController
   # PUT /sandwiches/1
   # PUT /sandwiches/1.json
   def update
-    @sandwich = Sandwich.find(params[:id])
-    if params[:sandwich]
-      @container = params[:sandwich][:containers].first if params[:sandwich][:containers]
-      @ingredients = params[:sandwich][:ingredients]
-    end
-
-    @sandwich.container = Container.find @container if @container
-    @sandwich.ingredients = Ingredient.find @ingredients if @ingredients
+    @sandwich = Sandwich.update_one(params)
 
     respond_to do |format|
       if @sandwich.save

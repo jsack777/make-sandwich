@@ -1,10 +1,14 @@
 MakeSandwich::Application.routes.draw do
   devise_for :users
   resources :users
-  resources :orders
   resources :condiments
   resources :ingredients
   resources :containers
+
+  match 'orders/thank_you' => 'orders#thank_you'
+  resources :orders
+
+  match 'sandwiches/select_theme' => 'sandwiches#select_theme'
   resources :sandwiches
 
   # The priority is based upon order of creation:
@@ -56,7 +60,7 @@ MakeSandwich::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'sandwiches#new'
+  root :to => 'orders#welcome'
 
   # See how all your routes lay out with "rake routes"
 

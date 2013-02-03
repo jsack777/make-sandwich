@@ -1,25 +1,5 @@
-<h1>Listing sandwiches</h1>
+<%= render :partial => 'list' %>
 
-<table>
-  <tr>
-    <th>Id</th>
-    <th>Order Id</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @sandwiches.each do |sandwich| %>
-  <tr>
-    <td><%= sandwich.id %></td>
-    <td><%= sandwich.order_id %></td>
-    <td><%= link_to '', sandwich, class: "icon-search" %></td>
-    <td><%= link_to '', edit_sandwich_path(sandwich), class: "icon-pencil" %></td>
-    <td><%= link_to '', sandwich, class: "icon-trash", method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Sandwich', new_sandwich_path %>
+<%= link_to 'Add a Sandwich', new_sandwich_path %><br/>
+<br/>
+<%= button_to 'Submit Order', orders_thank_you_path, :class => "btn btn-primary" %>

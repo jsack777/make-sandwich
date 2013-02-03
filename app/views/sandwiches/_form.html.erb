@@ -1,6 +1,7 @@
+<div id="sandwich_form">
 <%= form_for(@sandwich) do |f| %>
   <% if @sandwich.errors.any? %>
-    <div id="error_explanation">
+    <div class="control-group error">
       <h2><%= pluralize(@sandwich.errors.count, "error") %> prohibited this sandwich from being saved:</h2>
 
       <ul>
@@ -11,7 +12,66 @@
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit %>
+    <div class="fluid-row">
+      <label for="theme">Choose a Sandwich Theme for some preset values:</label>
+      <%= select_tag 'theme', options_for_select([''] + [@sandwich_examples].flatten, @sandwich.theme),
+                     :'data-remote' => true,
+                     :'data-url' => sandwiches_select_theme_path %>
+      <% image_display = "display: none;" if @sandwich.theme %>
+      <div id="theme_image" style="<%= image_display %>"></div>
+    </div><br/>
+
+    <div class="fluid-row">
+      <label for="containers">Containers:</label>
+      <% @containers.each do |c| %>
+          <label class="radio">
+          <%= c.name %>
+          <%= radio_button_tag :container, c.id, container_selected?(c.id) %>
+          </label>
+      <% end %>
+    </div><br/>
+
+    <div class="fluid-row">
+      <label for="ingredients">Meats:</label>
+      <% @meats.each do |c| %>
+          <label class="radio">
+          <%= check_box_tag "ingredients[]", c.id, ingredient_included?(c.id), :id => ingredient_id(c.id) %>
+            <%= c.name %>
+          </label>
+      <% end %>
+    </div><br/>
+
+    <div class="fluid-row">
+      <label for="ingredients">Veggies:</label>
+      <% @veggies.each do |c| %>
+          <label class="radio">
+          <%= check_box_tag "ingredients[]", c.id, ingredient_included?(c.id), :id => ingredient_id(c.id) %>
+            <%= c.name %>
+          </label>
+      <% end %>
+    </div><br/>
+
+    <div class="fluid-row">
+      <label for="ingredients">Cheeses:</label>
+      <% @cheeses.each do |c| %>
+          <label class="radio">
+          <%= check_box_tag "ingredients[]", c.id, ingredient_included?(c.id), :id => ingredient_id(c.id) %>
+            <%= c.name %>
+          </label>
+      <% end %>
+    </div><br/>
+
+    <div class="fluid-row">
+      <label for="ingredients">Condiments:</label>
+      <% @condiments.each do |c| %>
+          <label class="radio">
+          <%= check_box_tag "ingredients[]", c.id, ingredient_included?(c.id), :id => ingredient_id(c.id) %>
+            <%= c.name %>
+          </label>
+      <% end %>
+    </div><br/>
+
+    <%= f.submit 'Submit', :class=>'btn btn-primary' %>
   </div>
 <% end %>
+</div>

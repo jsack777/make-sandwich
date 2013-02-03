@@ -1,5 +1,5 @@
 class Sandwich < ActiveRecord::Base
-  attr_accessible :containers, :ingredients
+  attr_accessible :containers, :ingredients, :order_id
 
   has_many :sandwich_containers
   has_many :containers, :through => :sandwich_containers
@@ -8,6 +8,7 @@ class Sandwich < ActiveRecord::Base
   belongs_to :order
 
   validate :length_of_containers
+  validates :order_id, :presence => true
 
   def length_of_containers
     if self.containers.length != 1
@@ -31,18 +32,26 @@ class Sandwich < ActiveRecord::Base
     containers << value
   end
 
+  def self.update_one(options = {})
+    sandwich = find options[:id]
+    sandwich.container = Container.find(options[:container]) if options[:container].present?
+    sandwich.ingredients = [Ingredient.find(options[:ingredients])].flatten if options[:ingredients].present?
+    sandwich
+  end
+
   def self.build_one(options = {})
     sandwich = new
-    bread = options[:containers].first if options[:containers]
-    sandwich.container = Container.find(bread) if bread.present?
-    sandwich.ingredients = Ingredient.find(options[:ingredients]) if options[:ingredients].present?
+    sandwich.order_id = options[:order_id] if options[:order_id].present?
+    sandwich.container = Container.find(options[:container]) if options[:container].present?
+    sandwich.ingredients = [Ingredient.find(options[:ingredients])].flatten if options[:ingredients].present?
     sandwich
   end
 
   # 3 types of sandwiches as starting points
   def self.meaty
     sandwich = new
-    sandwich.container = Container.first
+    sandwich.theme = "Meaty"
+    sandwich.container = Container.last
     sandwich.ingredients = [
         Meat.meaty, Cheese.first
     ].flatten
@@ -51,6 +60,7 @@ class Sandwich < ActiveRecord::Base
 
   def self.veggie
     sandwich = new
+    sandwich.theme = "Veggie"
     sandwich.container = Container.last
     sandwich.ingredients = [
         Meat.veggie, Cheese.last, Vegetable.all
@@ -60,10 +70,32 @@ class Sandwich < ActiveRecord::Base
 
   def self.vegan
     sandwich = new
-    sandwich.container = Container.last
+    sandwich.theme = "Vegan"
+    sandwich.container = Container.first
     sandwich.ingredients = [
         Vegetable.all
     ].flatten
+    sandwich
+  end
+
+  def self.examples
+    ["Meaty", "Veggie", "Vegan"]
+  end
+
+  def self.themed(options = {})
+    logger.debug "themed options: #{options.inspect}"
+    sandwich =
+        case options[:theme]
+          when 'Meaty'
+            meaty
+          when 'Veggie'
+            veggie
+          when 'Vegan'
+            vegan
+          else
+            new
+        end
+    sandwich.order_id = options[:order_id]
     sandwich
   end
 

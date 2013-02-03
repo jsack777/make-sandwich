@@ -1,4 +1,12 @@
 class OrdersController < ApplicationController
+
+  before_filter :set_user
+
+  def set_user
+    @user = User.first if Rails.env.match(/test/)
+    @user ||= current_user
+  end
+
   # GET /orders
   # GET /orders.json
   def index
@@ -25,12 +33,10 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # GET /orders/new.json
   def new
-    @order = Order.new
+    @order = Order.create(user_id: @user.id)
+    session[:order_id] = @order.id
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @order }
-    end
+    redirect_to :controller => :sandwiches, :action => :index
   end
 
   # GET /orders/1/edit
@@ -62,6 +68,22 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.update_attributes(params[:order])
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @order.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def thank_you
+    @order = Order.find(session[:order_id])
+    session[:order_id] = nil # reset session
+    OrderMailer.submit_order(@order).deliver
+
+    respond_to do |format|
+      if @order.save
+        format.html
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
