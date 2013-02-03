@@ -1,10 +1,10 @@
-<h1>Thank you for your Order <%= @user.first_name %></h1>
+<h2>Thank you for your Order <%= @user.first_name %></h2>
 <br/>
 
 <p id="notice"><%= notice %></p>
 
-Enjoy the following while we process your order
-<br/>
+Enjoy the following snappy quote from our friends at http://www.iheartquotes.com/" while we process your order...
+<br/><br/>
 <%= SnappyQuote.get_one %><br/>
 <br/>
 <%= link_to 'New Order', new_order_path %>
