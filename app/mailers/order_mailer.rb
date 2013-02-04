@@ -8,6 +8,7 @@ class OrderMailer < ActionMailer::Base
     @sandwiches = @order.sandwiches
 
     order_text = "Here is another sandwich Order!\n\n"
+    order_text += "#{@order.user.display_name} would like the following Please!\n\n"
     @sandwiches.each_with_index do |sandwich, idx|
       order_text += "#{idx+1}. \
 #{sandwich.ingredients.present? ? sandwich.ingredients.collect_names : "nothing"}"

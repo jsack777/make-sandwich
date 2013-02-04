@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def display_name
+    self.full_name.strip.present? ? self.full_name.strip : self.email
+  end
 end
