@@ -15,4 +15,9 @@ module SandwichesHelper
   def ingredient_id(id)
     "i#{id}"
   end
+
+  def no_sandwiches?
+    @sandwiches.blank? ? true : @sandwiches.length == 0
+  end
+
 end

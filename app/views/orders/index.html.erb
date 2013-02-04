@@ -14,7 +14,6 @@
     <td><%= order.id %></td>
     <td><%= order.updated_at.to_date if order.updated_at %></td>
     <td><%= link_to '', order, class: "icon-search" %></td>
-    <td><%= link_to '', edit_order_path(order), class: "icon-pencil" %></td>
     <td><%= link_to '', order, class: "icon-trash", method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>

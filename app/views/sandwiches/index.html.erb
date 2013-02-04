@@ -2,4 +2,4 @@
 
 <%= link_to 'Add a Sandwich', new_sandwich_path %><br/>
 <br/>
-<%= button_to 'Submit Order', orders_thank_you_path, :class => "btn btn-primary" %>
+<%= button_to 'Submit Order', orders_thank_you_path, :class => "btn btn-primary", :disabled => no_sandwiches? %>
