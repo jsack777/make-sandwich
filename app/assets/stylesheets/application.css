@@ -12,6 +12,18 @@
  *= require_tree .
  */
 
+* { margin:0; padding:0; }
+
+html, body {
+  height: 100%;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  margin: 0 auto -24px;
+}
+
 .header-right {
   float: right;
   margin-right: 24px;
@@ -19,5 +31,28 @@
 
 .header {
     background-color: #f7f7f9;
-    height: 32px;
+    height: 48px;
 }
+
+.footer {
+    background-color: #f7f7f9;
+    height: 24px;
+    text-align: center;
+    clear: both;
+}
+
+/* CLEAR FIX*/
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.clearfix { display: inline-block; }
+
+/* Hides from IE-mac */
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* End hide from IE-mac */

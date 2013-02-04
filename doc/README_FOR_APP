@@ -1,2 +1,17 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+The Make Sandwich App:
+  This application will create a sandwich order to be sent to the GT sandwich collection mailbox
+
+  It defaults to using SSL for all interaction for a more secure session
+  It uses the devise gem for User account creation and maintenance
+  Bootstrap styles have been utilized
+  Rspec and cucumber were used to test basic functionality in the app
+
+  The basic workflow (this feature can be found in features/create_order.feature):
+    User logs in or signs up with an account and logs in - not tested
+    Presented with a Welcome screen, the user has just created an order session
+    The User then adds sandwich(es) to the current order
+    When finished adding sandwiches, the user then submits the order
+    The user receives an email confirmation and a copy is sent to the GT sandwich currier
+    The user can browse previous orders, but at this time can not perform much more than that
+
+

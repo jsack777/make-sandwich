@@ -6,4 +6,9 @@ class Ingredient < ActiveRecord::Base
   has_many :sandwiches, :through => :sandwich_ingredients
 
   validates :name, :presence => true, :uniqueness => true
+
+  def self.collect_names
+    all.collect{|i| i.name}.sort.join(', ')
+  end
+
 end

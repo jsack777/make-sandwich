@@ -16,11 +16,11 @@ Sandwich
   3 main styles: meat, vegetarian, vegan - ingredients
 
 Container
-  wraps a sandwich - this could be bread, pita, a bowl
+  holds sandwich ingredients - this could be bread, pita, a bowl (salad?)
 
 Ingredients
   Cheeses
-    chedder, feta, ...
+    cheddar, feta, ...
 
   Condiments
     catsup, ketchup, mayo, vinigrette, ...
@@ -38,3 +38,7 @@ User
   Admin?, password, email, orders
 
 TODO:
+  From Orders index - allow a User to re-order a sandwich
+  On sandwich order form - allow user to select all/none
+  Add admin role to protect various pages
+  Add visual appealing images and background colors (branding?)

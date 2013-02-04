@@ -60,5 +60,4 @@ end
 
 And /^I should generate an email of my order$/ do
   ActionMailer::Base.deliveries.size.should eq(1)
-  p ActionMailer::Base.deliveries.first
 end

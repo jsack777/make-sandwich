@@ -3,9 +3,6 @@
 <table class="table-hover">
   <tr>
     <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
 <% @sandwiches.each_with_index do |sandwich, idx| %>
@@ -14,10 +11,13 @@
                                     sandwich.ingredients.collect_names : "nothing" %> in a
       <%= sandwich.container.name if sandwich.container %>
     </td>
-    <td><%= link_to '', edit_sandwich_path(sandwich), class: "icon-pencil" %></td>
-    <td><%= link_to '', sandwich, class: "icon-trash", method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br/>
+<br/>
+<br/>
+A Snappy quote from our friends at http://www.iheartquotes.com/
+<br/>
+<%= SnappyQuote.get_one %>
