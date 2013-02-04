@@ -1,15 +1,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require 'simplecov'
-class SimpleCov::Formatter::MergedFormatter
-  def format(result)
-    SimpleCov::Formatter::HTMLFormatter.new.format(result)
-  end
-end
-SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
-SimpleCov.start 'rails' do
-  add_filter "/vendor/"
-end
+SimpleCov.command_name "specs"
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
