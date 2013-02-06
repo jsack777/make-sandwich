@@ -34,11 +34,11 @@ class SandwichesController < ApplicationController
     params.merge!(order_id: @order.id)
     @sandwich_examples = Sandwich.examples
     @containers = Container.order(:name)
-    @meats = Meat.order(:name)
-    @veggies = Vegetable.order(:name)
-    @cheeses = Cheese.order(:name)
-    @condiments = Condiment.order(:name)
-    @ingredients = [@meats, @veggies, @cheeses, @condiments].flatten
+    @ingredients = Ingredient.all
+    @meats = @ingredients.select{|i| i.class == Meat}.sort{|a,b| a.name <=> b.name}
+    @veggies = @ingredients.select{|i| i.class == Vegetable}.sort{|a,b| a.name <=> b.name}
+    @cheeses = @ingredients.select{|i| i.class == Cheese}.sort{|a,b| a.name <=> b.name}
+    @condiments = @ingredients.select{|i| i.class == Condiment}.sort{|a,b| a.name <=> b.name}
   end
 
   def select_theme
