@@ -33,4 +33,15 @@ describe Sandwich do
     subject.save.should be(true)
     subject.ingredients.length.should be(1)
   end
+
+  it "can be copied" do
+    subject.container = wheat
+    subject.order_id = order.id
+    subject.ingredients << turkey
+    subject.save.should be(true)
+    sandwich = Sandwich.copy(subject.id)
+    sandwich.order_id.should be(nil)
+    sandwich.ingredients.should eq(subject.ingredients)
+    sandwich.container.should eq(subject.container)
+  end
 end

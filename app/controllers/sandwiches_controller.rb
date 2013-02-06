@@ -1,5 +1,5 @@
 class SandwichesController < ApplicationController
-
+  before_filter :set_user
   before_filter :get_order
 
   def get_order
@@ -45,6 +45,23 @@ class SandwichesController < ApplicationController
     @sandwich = Sandwich.themed(params)
     logger.debug "current sandwich: #{@sandwich.ingredients.inspect} on #{@sandwich.container.name}"
     edit_session
+  end
+
+  def copy_sandwich
+    # new order started
+    @order = if session[:order_id]
+      Order.find(session[:order_id])
+    else
+      order = Order.create(user_id: @user.id)
+      session[:order_id] = order.id
+      order
+    end
+
+    @sandwich = Sandwich.copy(params[:id])
+    @sandwich.order_id = @order.id
+    logger.debug "current sandwich: #{@sandwich.ingredients.inspect} on #{@sandwich.container.name}"
+    edit_session
+    render :new
   end
 
   # GET /sandwiches/new

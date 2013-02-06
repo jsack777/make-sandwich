@@ -8,6 +8,7 @@ MakeSandwich::Application.routes.draw do
   match 'orders/thank_you' => 'orders#thank_you'
   resources :orders
 
+  match 'sandwiches/:id/copy' => 'sandwiches#copy_sandwich'
   match 'sandwiches/select_theme' => 'sandwiches#select_theme'
   resources :sandwiches
 

@@ -2,11 +2,6 @@ class OrdersController < ApplicationController
 
   before_filter :set_user
 
-  def set_user
-    @user = User.first if Rails.env.match(/test/)
-    @user ||= current_user
-  end
-
   # GET /orders
   # GET /orders.json
   def index

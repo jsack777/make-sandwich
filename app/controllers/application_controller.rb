@@ -9,4 +9,10 @@ class ApplicationController < ActionController::Base
   end
 
   before_filter :authenticate_user! unless Rails.env.match(/test/)
+
+  def set_user
+    @user = User.first if Rails.env.match(/test/)
+    @user ||= current_user
+  end
+
 end

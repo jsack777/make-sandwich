@@ -3,7 +3,7 @@
 include FactoryGirl::Syntax::Methods
 
 Given /^I have some seed data$/ do
-  require "#{Rails.root}/db/seeds.rb"
+  load "#{Rails.root}/db/seeds.rb"
 end
 
 And /^I am logged in$/ do
@@ -30,13 +30,13 @@ end
 
 When /^I select one as my template$/ do
   select('Veggie', :from=>'theme')
-end
-
-And /^I finalize my selection of ingredients$/ do
   meat = Meat.veggie.first
   cheese = Cheese.last
   has_checked_field?('i' + meat.id.to_s).should be(true)
   has_checked_field?('i' + cheese.id.to_s).should be(true)
+end
+
+And /^I finalize my selection of ingredients$/ do
   v = Vegetable.last
   check("i#{v.id}")
 end
@@ -45,13 +45,13 @@ And /^I submit my sandwich selection$/ do
   click_button('Submit')
 end
 
-Then /^I should see my current order sandwich list$/ do
-  page.should have_content 'veggie burger'
+Then /^I should see a "(.*?)" sandwich in the list$/ do |sandwich_type|
+  page.should have_content sandwich_type
   ActionMailer::Base.deliveries = []
 end
 
 And /^I can then confirm my order$/ do
-  SnappyQuote.should_receive(:get_one) {"Snappy little quip"}
+  SnappyQuote.should_receive(:get_one).at_least(1) {"Snappy little quip"}
   click_button('Submit Order')
 end
 
@@ -61,4 +61,27 @@ end
 
 And /^I should generate an email of my order$/ do
   ActionMailer::Base.deliveries.size.should eq(1)
+end
+
+Given /^I am on the Order History Page$/ do
+  @sandwich = Sandwich.meaty
+  @order = Order.create(user_id: @user.id)
+  @order.sandwiches << @sandwich
+  p @order.sandwiches
+  @order.valid?.should be(true)
+  @order.save!
+  visit("/orders")
+  page.should have_content 'Listing orders'
+end
+
+Given /^I select a past order$/ do
+  visit("/orders/1")
+  page.should have_content 'Listing sandwiches for your Past Order'
+  click_link('copy_sandwich')
+end
+
+Then /^I should see the sandwich ingredients pre\-selected$/ do
+  Meat.meaty.each do |meat|
+    has_checked_field?('i' + meat.id.to_s).should be(true)
+  end
 end

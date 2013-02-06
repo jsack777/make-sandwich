@@ -1,0 +1,21 @@
+<h1>Listing sandwiches for your Past Order</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sandwiches.each_with_index do |sandwich, idx| %>
+  <tr>
+    <td><%= idx + 1 %>. <%= sandwich.ingredients.present? ?
+                                    sandwich.ingredients.collect_names : "nothing" %> in a
+      <%= sandwich.container.name if sandwich.container %>
+    </td>
+    <td><%= link_to '', sandwich_path(sandwich) + '/copy', id: 'copy_sandwich',
+                    class: "icon-retweet" %></td>
+  </tr>
+<% end %>
+</table>
+
+<br/>

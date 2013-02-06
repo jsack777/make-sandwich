@@ -47,6 +47,15 @@ class Sandwich < ActiveRecord::Base
     sandwich
   end
 
+  def self.copy(id)
+    sandwich = find(id)
+    new_sandwich = new
+    new_sandwich.theme = sandwich.theme
+    new_sandwich.container = sandwich.container
+    new_sandwich.ingredients = sandwich.ingredients
+    new_sandwich
+  end
+
   # 3 types of sandwiches as starting points
   def self.meaty
     sandwich = new
