@@ -22,13 +22,17 @@ When /^I create a new order$/ do
   click_link('Add a Sandwich')
 end
 
+And /^I submit my selection$/ do
+  step %{I finalize my selection of ingredients}
+  step %{I submit my sandwich selection}
+end
 Then /^I should see a page with various sandwich types$/ do
   page.should have_content 'Containers'
   page.should have_content 'Meats'
   page.should have_content 'Veggies'
 end
 
-When /^I select one as my template$/ do
+When /^I choose a veggie theme$/ do
   select('Veggie', :from=>'theme')
   meat = Meat.veggie.first
   cheese = Cheese.last
@@ -48,6 +52,12 @@ end
 Then /^I should see a "(.*?)" sandwich in the list$/ do |sandwich_type|
   page.should have_content sandwich_type
   ActionMailer::Base.deliveries = []
+end
+
+And /^I finish my order$/ do
+  step %{I can then confirm my order}
+  step %{I am redirected to a thank you page with a snappy quote}
+  step %{I should generate an email of my order}
 end
 
 And /^I can then confirm my order$/ do
