@@ -51,6 +51,7 @@ Then /^I should see my current order sandwich list$/ do
 end
 
 And /^I can then confirm my order$/ do
+  SnappyQuote.should_receive(:get_one) {"Snappy little quip"}
   click_button('Submit Order')
 end
 

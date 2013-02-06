@@ -32,6 +32,15 @@
     </div><br/>
 
     <div class="fluid-row">
+    Ingredients<br/>
+    <label class="radio"><%= check_box_tag "all_tag", nil, nil, onclick: "selectAll()" %>
+    Select All</label>
+    <label class="radio"><%= check_box_tag "none_tag", nil, nil, onclick: "selectNone()" %>
+    Select None</label>
+    </div><br/>
+
+    <div id="ingredients">
+    <div class="fluid-row">
       <label for="ingredients">Meats:</label>
       <% @meats.each do |c| %>
           <label class="radio">
@@ -70,6 +79,7 @@
           </label>
       <% end %>
     </div><br/>
+    </div>
 
     <%= f.submit 'Submit' %>
   </div>
