@@ -1,7 +1,6 @@
 class OrderMailer < ActionMailer::Base
-  default from: "jsack777@gmail.com"
-  default bcc: "jsack777@gmail.com"
-  default to: "make_sandwich@generalthings.com"
+  default from: ENV['GMAIL_SMTP_USER']
+  default bcc: ENV['GMAIL_SMTP_USER']
 
   def submit_order(order)
     @order = order
@@ -18,7 +17,9 @@ class OrderMailer < ActionMailer::Base
     order_text += "A Snappy quote from our friends at http://www.iheartquotes.com/\n\n"
     order_text += SnappyQuote.get_one
 
-    mail(:cc => order.user.email, :subject => "Order Confirmation") do |format|
+    cc = ENV['GT_MAILBOX'] if order.user.email.match(/generalthings/)
+
+    mail(to: order.user.email, cc: cc, subject: "Order Confirmation") do |format|
       format.html { render 'order_mailer/sandwich_order' }
       format.text { render :text => order_text }
     end
